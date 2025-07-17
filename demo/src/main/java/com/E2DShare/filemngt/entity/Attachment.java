@@ -1,8 +1,5 @@
 package com.E2DShare.filemngt.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,13 +15,25 @@ public class Attachment {
     private String id;
     private String fileName;
     private String fileType;
+    @Column(length = 512)
+    private String encryptedKey;
+
+
 
     @Lob
+    @Column(name = "data", columnDefinition = "LONGBLOB")
     private byte[] data;
 
     public Attachment(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
+    }
+    public void setEncryptedKey(String encryptedKey) {
+        this.encryptedKey = encryptedKey;
+    }
+
+    public String getEncryptedKey() {
+        return encryptedKey;
     }
 }
